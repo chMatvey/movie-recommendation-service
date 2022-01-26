@@ -22,7 +22,13 @@ public class Movie {
     private Long id;
     private String title;
     private Integer duration;
-    private Integer rating;
+    private Double rating;
+
+    @Property("small_image_ref")
+    private String smallImageRef;
+
+    @Property("large_image_ref")
+    private String largeImageRef;
 
     @Property("release_year")
     private Integer releaseYear;
