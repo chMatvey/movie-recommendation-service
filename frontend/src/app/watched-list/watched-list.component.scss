@@ -1,0 +1,6 @@
+@import "variables";
+@import "mixins";
+
+.watched-list {
+  @include movie-list();
+}

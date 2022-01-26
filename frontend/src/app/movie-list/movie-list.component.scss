@@ -1,0 +1,30 @@
+@import "variables";
+@import "mixins";
+
+.movie-list {
+  @include movie-list();
+
+  &__content {
+    &__search-input {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      height: 70px;
+
+      input {
+        width: 70%;
+        height: 32px;
+        font-size: 18px;
+        border-radius: 7px;
+        border: none;
+        padding: 4px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}

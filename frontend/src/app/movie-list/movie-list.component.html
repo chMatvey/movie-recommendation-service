@@ -1,0 +1,57 @@
+<div class="movie-list">
+  <div class="movie-list__head">
+    <app-header-toolbar></app-header-toolbar>
+  </div>
+
+  <div class="movie-list__content">
+    <div class="movie-list__content__search-input">
+      <input type="text" #searchInput (input)="onSearch(searchInput.value)">
+    </div>
+
+    <div *ngIf="search" class="movie-list__content__group-wrapper">
+      <div class="movie-list__content__group-header">
+        <p>Ваш запрос</p>
+      </div>
+
+      <div *ngIf="searchMovies$ | async as movies" class="movie-list__content__group search-result">
+        <p *ngIf="movies.length === 0 else searchedMoviesBlock" class="no-movies">
+          Ничего не найдено
+        </p>
+
+        <ng-template #searchedMoviesBlock>
+          <div *ngFor="let movie of movies" class="movie-list__content__group__item">
+            <div class="movie-list__content__group__item__image">
+              <img [src]="movie.smallImageRef" [alt]="movie.title">
+            </div>
+            <div class="movie-list__content__group__item__title">
+              <span>{{movie.title}}</span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="movie-list__content__group-wrapper">
+      <div class="movie-list__content__group-header">
+        <p>Все фильмы</p>
+      </div>
+
+      <div *ngIf="allMovies$ | async as movies" class="movie-list__content__group all-movies">
+        <p *ngIf="movies.length === 0 else allMoviesBlock" class="no-movies">
+          Нет фильмов
+        </p>
+
+        <ng-template #allMoviesBlock>
+          <div *ngFor="let movie of movies" class="movie-list__content__group__item" [routerLink]="movie.id.toString()">
+            <div class="movie-list__content__group__item__image">
+              <img [src]="movie.smallImageRef" [alt]="movie.title">
+            </div>
+            <div class="movie-list__content__group__item__title">
+              <span>{{movie.title}}</span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

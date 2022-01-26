@@ -1,0 +1,41 @@
+<div class="movie-info">
+  <div class="movie-info__head">
+    <app-header-toolbar></app-header-toolbar>
+  </div>
+
+
+  <div *ngIf="movie$ | async as movie" class="movie-info__content">
+    <div class="movie-info__content__card">
+      <div class="movie-info__content__card__image-container">
+        <img [src]="movie.largeImageRef">
+      </div>
+
+      <div class="movie-info__content__card__gradient-container">
+        <div class="movie-info__content__card__gradient-container__color"></div>
+        <div class="movie-info__content__card__gradient-container__gradient"></div>
+      </div>
+
+      <div class="movie-info__content__card__info">
+        <div class="movie-info__content__card__info__title">
+          {{movie.title}}
+        </div>
+
+        <div class="movie-info__content__card__info__rating">
+          <span class="rating">{{movie.rating}}</span>
+          <span class="voice-count">{{movie.voiceCount}}</span>
+        </div>
+
+        <div class="movie-info__content__card__info__addition">
+          <span class="country">{{country(movie.country)}}</span>
+          <span class="genre">{{genre(movie.genre)}}</span>
+          <span class="duration">{{movie.duration}} мин</span>
+          <span class="age">{{movie.minAge}}+</span>
+        </div>
+
+        <div class="movie-info__content__card__info__add-to-watched">
+          <button>Просмотренно</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

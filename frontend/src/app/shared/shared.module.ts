@@ -1,13 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HeaderToolbarComponent } from './header-toolbar/header-toolbar.component';
+import { RouterModule } from '@angular/router';
+import { BaseComponent } from './base/base.component'
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    HeaderToolbarComponent,
+    BaseComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
-    CommonModule
+    CommonModule,
+    RouterModule,
+    HeaderToolbarComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}
