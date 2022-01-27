@@ -189,9 +189,9 @@ def create_movie_country_ref(new_data):
 
 
 def fill_database():
-    uri = "neo4j+s://4ba8049f.databases.neo4j.io"
+    uri = "bolt://neo4j:7687"
     user = "neo4j"
-    password = "54aOHjUP3XxccKn6pA650bdgEkKUakWIIs9ejWc_xl4"
+    password = "streams"
 
     new_data = get_data()
 
@@ -205,9 +205,9 @@ def fill_database():
 
 
 def is_fill_needed():
-    uri = "neo4j+s://4ba8049f.databases.neo4j.io"
+    uri = "bolt://neo4j:7687"
     user = "neo4j"
-    password = "54aOHjUP3XxccKn6pA650bdgEkKUakWIIs9ejWc_xl4"
+    password = "streams"
     driver = GraphDatabase.driver(uri, auth=(user, password))
     session = driver.session()
     response = list(session.run("MATCH (m:Movie) RETURN count(m) as count"))
