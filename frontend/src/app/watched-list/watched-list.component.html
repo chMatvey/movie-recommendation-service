@@ -9,7 +9,21 @@
         <p>Просмотренно</p>
       </div>
 
-      <div class="watched-list__content__group">
+      <div *ngIf="watchedMovies$ | async as movies" class="watched-list__content__group">
+        <p *ngIf="movies.length === 0 else moviesBlock" class="no-movies">
+          Нет просмотренных фильмов
+        </p>
+
+        <ng-template #moviesBlock>
+          <div *ngFor="let movie of movies" class="watched-list__content__group__item" [routerLink]="movie.id.toString()">
+            <div class="watched-list__content__group__item__image">
+              <img [src]="movie.smallImageRef" [alt]="movie.title">
+            </div>
+            <div class="watched-list__content__group__item__title">
+              <span>{{movie.title}}</span>
+            </div>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

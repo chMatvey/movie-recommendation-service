@@ -5,20 +5,37 @@
   height: $header-toolbar-height;
   width: 100vw;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
 
-  a {
-    font-size: 18px;
-    color: #fff;
-    line-height: 21px;
-    font-style: italic;
-    text-shadow: $text-shadow;
-    margin-right: 40px;
+  .container {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 
-    &.active {
-      text-decoration: underline;
-      font-size: 20px;
+    a {
+      font-size: 18px;
+      color: #fff;
+      line-height: 21px;
+      font-style: italic;
+      text-shadow: $text-shadow;
+      margin-right: 40px;
+
+      &.active {
+        text-decoration: underline;
+        font-size: 20px;
+      }
+    }
+  }
+
+  .left {
+    width: 98px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+      height: 24px;
+      width: 78px;
     }
   }
 }

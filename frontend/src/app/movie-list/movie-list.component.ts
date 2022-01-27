@@ -9,7 +9,6 @@ import { MovieService } from '../shared/service/movie.service'
   styleUrls: ['./movie-list.component.scss']
 })
 export class MovieListComponent implements OnInit {
-
   allMovies$!: Observable<Movie[]>
 
   search = ""

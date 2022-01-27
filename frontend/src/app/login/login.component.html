@@ -1,26 +1,26 @@
 <div class="login">
-  <div class="login__form">
+  <form class="login__form" [formGroup]="form" (submit)="login()">
     <div class="login__form__header">
-      Movie recommendation service
+      Рекомендательный сервис
     </div>
 
     <div class="form-group">
-      <label for="username">Username</label>
-      <input class="form-control" id="username" type="text">
+      <label for="username">Имя пользователя</label>
+      <input formControlName="username" class="form-control" id="username" type="text">
     </div>
 
     <div class="form-group">
-      <label for="password">Password</label>
-      <input class="form-control" id="password" type="password">
+      <label for="password">Пароль</label>
+      <input formControlName="password" class="form-control" id="password" type="password">
     </div>
 
     <div class="login__form__submit">
-      <button>Login</button>
+      <button type="submit" [disabled]="form.invalid">Войти</button>
 
       <div class="login__form__submit__redirect">
-        <span>No account yet</span>
-        <a routerLink="/register">Register</a>
+        <span>Нет аккаунта</span>
+        <a routerLink="/register">Регистрация</a>
       </div>
     </div>
-  </div>
+  </form>
 </div>

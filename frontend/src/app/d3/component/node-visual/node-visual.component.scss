@@ -1,16 +1,35 @@
+@mixin node-hover {
+  fill: #f9fbfd;
+  font-weight: 600;
+  font-size: 14px;
+}
+
 .node {
-  cursor: pointer;
+  cursor: grab;
   transition: stroke-width 0.1s ease-out,
   fill 0.1s ease-out,
   stroke 0.1s ease-out;
 
   stroke: white;
-  stroke-width: 0.25;
+  stroke-width: 0.6;
+
+  &:hover {
+    & + .node-name {
+      @include node-hover();
+    }
+  }
 }
 
 .node-name {
   text-anchor: middle;
   alignment-baseline: central;
   font-weight: 300;
-  fill: white;
+  fill: #fff;
+  cursor: grab;
+  word-break: break-word;
+  white-space: pre;
+
+  &:hover {
+    @include node-hover();
+  }
 }

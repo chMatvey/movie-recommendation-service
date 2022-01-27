@@ -32,8 +32,11 @@
           <span class="age">{{movie.minAge}}+</span>
         </div>
 
-        <div class="movie-info__content__card__info__add-to-watched">
-          <button>Просмотренно</button>
+        <div *ngIf="notWatched" class="movie-info__content__card__info__add-to-watched">
+          <div class="watched-form">
+            <input [formControl]="ratingControl" type="number">
+            <button [disabled]="ratingControl.invalid" (click)="markWatched()">Просмотренно</button>
+          </div>
         </div>
       </div>
     </div>
