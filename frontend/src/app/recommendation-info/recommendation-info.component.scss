@@ -1,0 +1,10 @@
+@import "variables";
+@import "mixins";
+
+.recommendation-info {
+  @include page();
+
+  &__content {
+    background-color: rgb(249, 251, 253);
+  }
+}

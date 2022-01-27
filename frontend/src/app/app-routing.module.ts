@@ -36,6 +36,10 @@ const routes: Routes = [
     loadChildren: () => import('./recommendation-list/recommendation-list.module').then(m => m.RecommendationListModule)
   },
   {
+    path: 'recommendation/:id',
+    loadChildren: () => import('./recommendation-info/recommendation-info.module').then(m => m.RecommendationInfoModule)
+  },
+  {
     path: '**',
     redirectTo: 'movies'
   }
