@@ -1,0 +1,5 @@
+export enum NodeType {
+  RECOMMENDATION = "RECOMMENDATION",
+  WATCHED = "WATCHED",
+  LINK = "LINK"
+}
