@@ -10,4 +10,7 @@ import java.util.List;
 public interface MovieRepository extends Neo4jRepository<Movie, Long> {
     @Query("MATCH (n:Movie) WHERE toLower(n.title) CONTAINS $title return n")
     List<Movie> searchByTitle(@Param("title") String title);
+
+    @Query("MATCH (n:Movie) return n limit 20")
+    List<Movie> findLimit();
 }
