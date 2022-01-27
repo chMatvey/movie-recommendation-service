@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { Observable, tap } from 'rxjs'
+import { Observable, of, tap } from 'rxjs'
 import { LoginRequest, RegisterRequest, User } from '../model/user'
 import { USER_API_URL } from '../../app.const'
 
@@ -31,5 +31,9 @@ export class UserService {
           localStorage.setItem('user', JSON.stringify(user))
         })
       )
+  }
+
+  logout(): void {
+    localStorage.removeItem('user')
   }
 }
