@@ -34,6 +34,7 @@
     align-items: center;
 
     &__group-wrapper {
+      overflow-y: hidden;
       padding: 15px 40px;
       min-height: 25%;
       max-height: 40%;

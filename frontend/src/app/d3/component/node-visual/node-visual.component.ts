@@ -4,7 +4,7 @@ import { Node } from '../../model'
 @Component({
   selector: '[nodeVisual]',
   template: `
-    <svg:g [attr.transform]="'translate(' + node.x + ',' + node.y + ')'">
+    <svg:g [attr.transform]="transform">
       <svg:circle
         class="node"
         [attr.r]="node.r"
@@ -20,4 +20,8 @@ import { Node } from '../../model'
 })
 export class NodeVisualComponent {
   @Input('nodeVisual') node!: Node;
+
+  get transform(): string {
+    return `translate(${this.node.x}, ${this.node.y})`
+  }
 }

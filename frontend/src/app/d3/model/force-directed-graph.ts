@@ -2,6 +2,7 @@ import { EventEmitter } from '@angular/core'
 import { Link } from './link'
 import { Node } from './node'
 import { forceCenter, forceCollide, forceLink, forceManyBody, forceSimulation, Simulation } from 'd3'
+import { Graph } from './graph'
 import { GraphOptions } from './graph-options'
 
 const FORCES = {
@@ -10,7 +11,7 @@ const FORCES = {
   CHARGE: -1
 }
 
-export class ForceDirectedGraph {
+export class ForceDirectedGraph implements Graph {
   ticker = new EventEmitter<Simulation<Node, Link>>()
   simulation!: Simulation<any, any>
 

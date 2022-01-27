@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { D3Service } from '../../d3.service'
-import { ForceDirectedGraph, Link, Node } from '../../model'
+import { Graph, Link, Node } from '../../model'
 
 @Component({
   selector: 'graph',
@@ -12,7 +12,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
   @Input() nodes!: Node[]
   @Input() links!: Link[]
 
-  graph!: ForceDirectedGraph
+  graph!: Graph
 
   private _options = {width: 800, height: 600 }
 
@@ -35,9 +35,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.nodes)
-    console.log(this.links)
-    this.graph = this.d3Service.getForceDirectedGraph(this.nodes, this.links, this.options)
+    this.graph = this.d3Service.createGraph(this.nodes, this.links, this.options)
 
     this.graph.ticker.subscribe(() => this.cdr.markForCheck())
   }
