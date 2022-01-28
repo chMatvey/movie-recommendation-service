@@ -135,7 +135,7 @@ def get_recommendation_from_response(response):
     for key in return_keys:
         mmovies.append(masta[key])
         index += 1
-        if index >= 10:
+        if index >= 100:
             break
     return mmovies
 

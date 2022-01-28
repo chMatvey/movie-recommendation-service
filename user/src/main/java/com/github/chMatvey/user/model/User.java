@@ -2,8 +2,8 @@ package com.github.chMatvey.user.model;
 
 import lombok.*;
 
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
