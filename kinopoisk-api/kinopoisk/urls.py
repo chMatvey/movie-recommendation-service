@@ -7,7 +7,6 @@ is_fill_needed()
 
 urlpatterns = [
     re_path(r'api/gettingmovie/.*', django_recommendation),
-    re_path(r'api/')
 ]
 
 #Initialization

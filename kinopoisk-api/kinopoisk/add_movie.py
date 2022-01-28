@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests as req
+import lxml
 
 my_cookies = {'Accept-Encoding': 'gzip, deflate, br',
               'Accept-Language': 'ru,en;q=0.8',
@@ -72,6 +73,7 @@ def get_movie_rating(link):
     try:
         a = link + 'votes/'
         soup = BeautifulSoup(driver_get_text(a), 'lxml')
+        print(soup)
         rating = float(soup.find('span', {'class': 'rating_ball'}).text[:-2])
         votes_count = int(get_num_from_string(soup.find('span', {'class': 'ratingCount'}).text))
         return rating, votes_count

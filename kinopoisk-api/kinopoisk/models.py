@@ -3,6 +3,9 @@ from django.db import models
 # Create your models here.
 from rest_framework.utils import json
 from neo4j import GraphDatabase
+uri = "neo4j+s://4ba8049f.databases.neo4j.io"
+user = "neo4j"
+password = "54aOHjUP3XxccKn6pA650bdgEkKUakWIIs9ejWc_xl4"
 
 
 def get_data():
@@ -188,13 +191,7 @@ def create_movie_country_ref(new_data):
     return adding_counries
 
 
-def fill_database():
-    uri = "neo4j+s://4ba8049f.databases.neo4j.io"
-    user = "neo4j"
-    password = "54aOHjUP3XxccKn6pA650bdgEkKUakWIIs9ejWc_xl4"
-
-    new_data = get_data()
-
+def fill_database(new_data):
     driver = GraphDatabase.driver(uri, auth=(user, password))
     session = driver.session()
     session.run(create_movie_order(new_data) + create_genres_order(new_data) + create_persons_order(new_data) +
@@ -205,13 +202,20 @@ def fill_database():
 
 
 def is_fill_needed():
-    uri = "neo4j+s://4ba8049f.databases.neo4j.io"
-    user = "neo4j"
-    password = "54aOHjUP3XxccKn6pA650bdgEkKUakWIIs9ejWc_xl4"
     driver = GraphDatabase.driver(uri, auth=(user, password))
     session = driver.session()
     response = list(session.run("MATCH (m:Movie) RETURN count(m) as count"))
     session.close()
     driver.close()
     if response[0]['count'] < 100:
-        fill_database()
+        fill_database(get_data())
+
+
+def find(kinopoisk_id):
+    driver = GraphDatabase.driver(uri, auth=(user, password))
+    session = driver.session()
+    response = list(session.run("MATCH (m:Movie) WHERE m.kinopoisk_id = " + str(kinopoisk_id) + " RETURN count(m) as "
+                                                                                                "count"))
+    session.close()
+    driver.close()
+    return response[0]['count']

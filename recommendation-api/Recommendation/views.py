@@ -42,7 +42,7 @@ def get_link_from_response(response):
     return rel
 
 
-def get_recommendation_from_response(response):
+def get_watched_movies_from_response(response):
     watched_movies = []
 
     for movie in response:
@@ -62,13 +62,66 @@ def get_recommendation_from_response(response):
     return watched_movies
 
 
+masta = {}
+
+
+def get_len(key):
+    print(masta)
+    return len(masta[key]['nodes'])
+
+
+def get_recommendation_from_response(response):
+    watched_movies = get_watched_movies_from_response(response)
+    index = 0
+    masta = {}
+    for index in range(len(watched_movies)):
+        if watched_movies[index]['title'] not in masta.keys():
+            masta[watched_movies[index]['title']] = watched_movies[index]
+        else:
+            has_Link = False
+            has_Watch = False
+            rec_node = watched_movies[index]['nodes'][0]
+            link_node = watched_movies[index]['nodes'][1]
+            watch_node = watched_movies[index]['nodes'][2]
+            links_Link_to_Rec = watched_movies[index]['links'][0]
+            links_Link_to_Watch = watched_movies[index]['links'][1]
+
+            tit = watched_movies[index]['title']
+            for ex_node in masta[tit]['nodes']:
+                if link_node == ex_node:
+                    has_Link = True
+                if watch_node == ex_node:
+                    has_Watch = True
+            if not has_Link:
+                masta[tit]['nodes'].append(link_node)
+                masta[tit]['links'].append(links_Link_to_Rec)
+            if not has_Watch:
+                print(2)
+                masta[tit]['nodes'].append(watch_node)
+                masta[tit]['links'].append(links_Link_to_Watch)
+
+    masta_values = {}
+    for key in masta:
+        masta_values[key] = len(masta[key]['nodes'])
+    masta_values = {k: masta_values[k] for k in sorted(masta_values, key=masta_values.get, reverse=True)}
+
+    movies = []
+    index = 0
+    for key in masta_values:
+        movies.append(masta[key])
+        index += 1
+        if index >= 10:
+            break
+    return movies
+
+
 # Create your views here.
 def django_recommendation(username):
     driver = GraphDatabase.driver(uri, auth=(user, password))
     session = driver.session()
     result = list(session.run('MATCH (u:User)-[:hasWatched]->(m:Movie)-[r]-(t)-[r2]-(m2:Movie) '
-                              'WHERE u.name = "' + username.path.split('/')[-1] + '" AND m.id <> m2.id '
-                                                                                  'RETURN m, r, t, r2, m2 LIMIT 10'))
+                              'WHERE u.username = "' + username.path.split('/')[-1] + '" AND m.id <> m2.id '
+                                                                                      'RETURN m, r, t, r2, m2'))
     session.close()
     driver.close()
     return HttpResponse(json.dumps(get_recommendation_from_response(result)), content_type="application/json")
