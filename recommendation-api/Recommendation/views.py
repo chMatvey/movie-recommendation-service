@@ -67,7 +67,7 @@ def django_recommendation(username):
     driver = GraphDatabase.driver(uri, auth=(user, password))
     session = driver.session()
     result = list(session.run('MATCH (u:User)-[:hasWatched]->(m:Movie)-[r]-(t)-[r2]-(m2:Movie) '
-                              'WHERE u.name = "' + username.path.split('/')[-1] + '" AND m.id <> m2.id '
+                              'WHERE u.username = "' + username.path.split('/')[-1] + '" AND m.id <> m2.id '
                                                                                   'RETURN m, r, t, r2, m2 LIMIT 10'))
     session.close()
     driver.close()

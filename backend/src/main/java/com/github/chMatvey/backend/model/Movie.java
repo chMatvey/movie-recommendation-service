@@ -27,11 +27,18 @@ public class Movie {
     private Integer duration;
     private Double rating;
 
+
     @Property("small_image_ref")
     private String smallImageRef;
 
     @Property("large_image_ref")
     private String largeImageRef;
+
+    @Property("small_teaser_image_ref")
+    private String smallTeaserImageRef;
+
+    @Property("large_teaser_image_ref")
+    private String largeTeaserImageRef;
 
     @Property("release_year")
     private Integer releaseYear;
