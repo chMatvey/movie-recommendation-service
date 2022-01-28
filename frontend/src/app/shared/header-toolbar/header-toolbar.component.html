@@ -1,5 +1,11 @@
 <div class="header-toolbar">
-  <a routerLink="/movies" routerLinkActive="active">Фильмы</a>
-  <a routerLink="/watched" routerLinkActive="active">Просмотренные</a>
-  <a routerLink="/recommendation" routerLinkActive="active">Рекомендации</a>
+  <div class="container">
+    <a routerLink="/movies" routerLinkActive="active">Фильмы</a>
+    <a routerLink="/watched" routerLinkActive="active">Просмотренные</a>
+    <a routerLink="/add-new" routerLinkActive="active">Добавить</a>
+    <a routerLink="/recommendation" routerLinkActive="active">Рекомендации</a>
+  </div>
+  <div class="left">
+    <button (click)="logout()">Выйти</button>
+  </div>
 </div>

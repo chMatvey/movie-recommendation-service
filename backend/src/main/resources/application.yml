@@ -1,4 +1,10 @@
+server:
+  port: 9000
+
 spring:
+  application:
+    name: Backend
+
   neo4j:
     uri: bolt://localhost:7687
     authentication:

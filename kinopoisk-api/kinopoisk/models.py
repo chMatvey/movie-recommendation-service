@@ -3,9 +3,10 @@ from django.db import models
 # Create your models here.
 from rest_framework.utils import json
 from neo4j import GraphDatabase
-uri = "neo4j+s://4ba8049f.databases.neo4j.io"
+
+uri = "bolt://neo4j:7687"
 user = "neo4j"
-password = "54aOHjUP3XxccKn6pA650bdgEkKUakWIIs9ejWc_xl4"
+password = "streams"
 
 
 def get_data():

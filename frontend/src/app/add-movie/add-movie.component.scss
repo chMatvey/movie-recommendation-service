@@ -1,0 +1,27 @@
+@import "variables";
+@import "mixins";
+
+.add-movie {
+  @include page();
+
+  &__content {
+    display: flex;
+    justify-content: center;
+
+    &__form {
+      margin-top: 55px;
+      width: 80%;
+
+      &__submit {
+        display: flex;
+        justify-content: center;
+        margin-top: 70px;
+
+        button {
+          height: 30px;
+          width: 240px;
+        }
+      }
+    }
+  }
+}

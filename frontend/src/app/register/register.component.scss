@@ -1,56 +1,11 @@
+@import "mixins";
+@import "variables";
+
 .register {
-  width: 100vw;
-  height: 100vh;
-  background-image: url("/assets/images/user-background.jpeg");
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include login-page();
 
   &__form {
     width: 456px;
-    height: 454px;
-    padding: 38px 49px;
-    background-color: #141414;
-    border-radius: 6px;
-
-    &__header {
-      height: 28px;
-      margin-bottom: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
-      line-height: 28px;
-      color: #fff;
-    }
-
-    &__submit {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-top: 44px;
-
-      button {
-        width: 185px;
-        height: 35px;
-      }
-
-      &__redirect {
-        margin-top: 21px;
-
-        * {
-          font-size: 12px;
-          line-height: 13px;
-          font-weight: 300;
-          color: #e6e6e6;
-        }
-
-        span {
-          margin-right: 4px;
-          opacity: .6;
-        }
-      }
-    }
+    height: 458px;
   }
 }
