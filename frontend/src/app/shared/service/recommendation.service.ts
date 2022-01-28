@@ -8,19 +8,20 @@ import { RECOMMENDATION_API_URL } from '../../app.const'
   providedIn: 'root'
 })
 export class RecommendationService {
+  id?: number
   recommendations: Recommendation[] = []
 
   constructor(private http: HttpClient) { }
 
   fetch(username: string): Observable<Recommendation[]> {
-    return this.http.get<Recommendation[]>(`${RECOMMENDATION_API_URL}/api/recommendation/${username}`)
+    return this.http.get<Recommendation[]>(`${RECOMMENDATION_API_URL}/recommendation/${username}`)
       .pipe(
         tap(recommendations => this.recommendations = recommendations)
       )
   }
 
-  get(id: number): Recommendation | null {
-    return this.recommendations.find(item => item.id === id) ?? null
+  get(id: number): Recommendation {
+    return this.recommendations.find(item => item.id === id)!
   }
 
   getTest(): Recommendation {

@@ -38,7 +38,14 @@ export class NodeVisualComponent {
   }
 
   get shortText(): boolean {
-    return this.node.title.match(/([\s]+)/g)!.length < 2
+    if (!this.node.title) {
+      return true
+    }
+    const match = this.node.title.match(/([\s]+)/g)
+    if (!match) {
+      return true
+    }
+    return match.length < 2
   }
 
   get textParts(): string[] {

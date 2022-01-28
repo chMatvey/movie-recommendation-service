@@ -15,7 +15,7 @@ export class RecommendationInfoComponent implements OnInit {
   constructor(private recommendationService: RecommendationService) { }
 
   ngOnInit(): void {
-    const recommendation = this.recommendationService.getTest()
+    const recommendation = this.recommendationService.get(this.recommendationService.id!)
     const {nodes, links} = recommendationToD3model(recommendation)
 
     this.nodes = nodes
