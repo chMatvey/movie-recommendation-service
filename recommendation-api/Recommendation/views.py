@@ -81,6 +81,7 @@ def count_watched(key):
 def get_recommendation_from_response(response):
     watched_movies = get_watched_movies_from_response(response)
     index = 0
+    watched_titles = []
     for index in range(len(watched_movies)):
         if watched_movies[index]['title'] not in masta.keys():
             masta[watched_movies[index]['title']] = watched_movies[index]
@@ -92,7 +93,8 @@ def get_recommendation_from_response(response):
             rec_node = watched_movies[index]['nodes'][2]
             links_Link_to_Rec = watched_movies[index]['links'][1]
             links_Link_to_Watch = watched_movies[index]['links'][0]
-
+            if watch_node['title'] not in watched_titles:
+                watched_titles.append(watch_node['title'])
             tit = watched_movies[index]['title']
             for ex_node in masta[tit]['nodes']:
                 if link_node == ex_node:
@@ -109,9 +111,12 @@ def get_recommendation_from_response(response):
 
     masta_values = {}
     for key in masta:
-        masta_values[key] = count_watched(key)
+        if key not in watched_titles:
+            masta_values[key] = count_watched(key)
+        else:
+            masta_values[key] = 0
     masta_values = {k: masta_values[k] for k in sorted(masta_values, key=masta_values.get, reverse=True)}
-    return_keys = sorted(masta.keys(), key=get_len, reverse=True)
+    return_keys = masta_values
     mmovies = []
     index = 0
     for key in return_keys:
