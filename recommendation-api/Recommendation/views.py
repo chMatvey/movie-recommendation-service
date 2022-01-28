@@ -70,22 +70,31 @@ def get_len(key):
     return len(masta[key]['nodes'])
 
 
+def count_watched(key):
+    count = 0
+    for node in masta[key]['nodes']:
+        if node['type'] == 'WATCHED':
+            count += 1
+    return count
+
+
 def get_recommendation_from_response(response):
     watched_movies = get_watched_movies_from_response(response)
     index = 0
-    masta = {}
+    watched_titles = []
     for index in range(len(watched_movies)):
         if watched_movies[index]['title'] not in masta.keys():
             masta[watched_movies[index]['title']] = watched_movies[index]
         else:
             has_Link = False
             has_Watch = False
-            rec_node = watched_movies[index]['nodes'][0]
+            watch_node = watched_movies[index]['nodes'][0]
             link_node = watched_movies[index]['nodes'][1]
-            watch_node = watched_movies[index]['nodes'][2]
-            links_Link_to_Rec = watched_movies[index]['links'][0]
-            links_Link_to_Watch = watched_movies[index]['links'][1]
-
+            rec_node = watched_movies[index]['nodes'][2]
+            links_Link_to_Rec = watched_movies[index]['links'][1]
+            links_Link_to_Watch = watched_movies[index]['links'][0]
+            if watch_node['title'] not in watched_titles:
+                watched_titles.append(watch_node['title'])
             tit = watched_movies[index]['title']
             for ex_node in masta[tit]['nodes']:
                 if link_node == ex_node:
@@ -97,23 +106,25 @@ def get_recommendation_from_response(response):
                 masta[tit]['links'].append(links_Link_to_Rec)
                 masta[tit]['links'].append(links_Link_to_Watch)
             if not has_Watch:
-                print(2)
                 masta[tit]['nodes'].append(watch_node)
                 masta[tit]['links'].append(links_Link_to_Watch)
 
     masta_values = {}
     for key in masta:
-        masta_values[key] = len(masta[key]['nodes'])
+        if key not in watched_titles:
+            masta_values[key] = count_watched(key)
+        else:
+            masta_values[key] = 0
     masta_values = {k: masta_values[k] for k in sorted(masta_values, key=masta_values.get, reverse=True)}
-
-    movies = []
+    return_keys = masta_values
+    mmovies = []
     index = 0
-    for key in masta_values:
-        movies.append(masta[key])
+    for key in return_keys:
+        mmovies.append(masta[key])
         index += 1
         if index >= 10:
             break
-    return movies
+    return mmovies
 
 
 # Create your views here.
