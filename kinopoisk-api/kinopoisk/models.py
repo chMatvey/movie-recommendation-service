@@ -6,9 +6,9 @@ from neo4j import GraphDatabase
 from .neo4j_add_movie import smart_create_persons_order, smart_create_movie_order, smart_create_country_order, \
     smart_create_genres_order, create_dictionary_for_movie, get_country, get_int, delete_space
 
-uri = "neo4j+s://4ba8049f.databases.neo4j.io"
+uri = "bolt://neo4j:7687"
 user = "neo4j"
-password = "54aOHjUP3XxccKn6pA650bdgEkKUakWIIs9ejWc_xl4"
+password = "streams"
 
 
 def get_data():

@@ -3,9 +3,9 @@ import logging
 from neo4j.exceptions import ServiceUnavailable
 import json
 
-uri = "neo4j+s://4ba8049f.databases.neo4j.io"
+uri = "bolt://neo4j:7687"
 user = "neo4j"
-password = "54aOHjUP3XxccKn6pA650bdgEkKUakWIIs9ejWc_xl4"
+password = "streams"
 
 
 def create_dictionary_for_movie(movie):
