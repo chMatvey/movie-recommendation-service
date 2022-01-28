@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'kinopoisk.apps.KinopoiskrecommendationConfig'
+    'kinopoisk.apps.KinopoiskApiConfig'
 ]
 
 MIDDLEWARE = [

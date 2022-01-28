@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Movie } from '../shared/model/movie'
-import { debounceTime, Observable, pipe, Subject, switchMap, tap } from 'rxjs'
+import { debounceTime, Observable, Subject, switchMap } from 'rxjs'
 import { MovieService } from '../shared/service/movie.service'
 
 @Component({

@@ -4,6 +4,10 @@ from django.db import models
 from rest_framework.utils import json
 from neo4j import GraphDatabase
 
+uri = "bolt://neo4j:7687"
+user = "neo4j"
+password = "streams"
+
 
 def get_data():
     with open("./all_links_kinopoisk7.txt", "r") as read_file:
@@ -188,13 +192,7 @@ def create_movie_country_ref(new_data):
     return adding_counries
 
 
-def fill_database():
-    uri = "bolt://neo4j:7687"
-    user = "neo4j"
-    password = "streams"
-
-    new_data = get_data()
-
+def fill_database(new_data):
     driver = GraphDatabase.driver(uri, auth=(user, password))
     session = driver.session()
     session.run(create_movie_order(new_data) + create_genres_order(new_data) + create_persons_order(new_data) +
@@ -205,13 +203,20 @@ def fill_database():
 
 
 def is_fill_needed():
-    uri = "bolt://neo4j:7687"
-    user = "neo4j"
-    password = "streams"
     driver = GraphDatabase.driver(uri, auth=(user, password))
     session = driver.session()
     response = list(session.run("MATCH (m:Movie) RETURN count(m) as count"))
     session.close()
     driver.close()
     if response[0]['count'] < 100:
-        fill_database()
+        fill_database(get_data())
+
+
+def find(kinopoisk_id):
+    driver = GraphDatabase.driver(uri, auth=(user, password))
+    session = driver.session()
+    response = list(session.run("MATCH (m:Movie) WHERE m.kinopoisk_id = " + str(kinopoisk_id) + " RETURN count(m) as "
+                                                                                                "count"))
+    session.close()
+    driver.close()
+    return response[0]['count']
