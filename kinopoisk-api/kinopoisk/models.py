@@ -3,6 +3,9 @@ from django.db import models
 # Create your models here.
 from rest_framework.utils import json
 from neo4j import GraphDatabase
+from .neo4j_add_movie import smart_create_persons_order, smart_create_movie_order, smart_create_country_order, \
+    smart_create_genres_order, create_dictionary_for_movie, get_country, get_int, delete_space
+
 uri = "neo4j+s://4ba8049f.databases.neo4j.io"
 user = "neo4j"
 password = "54aOHjUP3XxccKn6pA650bdgEkKUakWIIs9ejWc_xl4"
@@ -13,42 +16,6 @@ def get_data():
         data = json.load(read_file)
     new_data = data[:100]
     return new_data
-
-
-def delete_space(string):
-    return string.replace(' ', '_')
-
-
-def create_dictionary_for_movie(movie):
-    needed_tags = ['ID', 'Link', 'Name', 'Время', 'Rating', 'Count_votes', 'background_image_link_1x',
-                   'background_image_link_2x',
-                   'title_image_link_1x', 'title_image_link_2x']
-    needed_tags_array_1 = ['Год производства', 'Возраст']
-    needed_tags_rename = {}
-    needed_tags_rename["ID"] = "kinopoisk_id"
-    needed_tags_rename["Name"] = "title"
-    needed_tags_rename["Время"] = 'duration'
-    needed_tags_rename["Год_производства"] = "release_year"
-    needed_tags_rename["Возраст"] = "min_age"
-    needed_tags_rename["Rating"] = "rating"
-    needed_tags_rename["Count_votes"] = "voice_count"
-    needed_tags_rename["Link"] = "kinopoisk_ref"
-    needed_tags_rename["background_image_link_1x"] = "small_image_ref"
-    needed_tags_rename["background_image_link_2x"] = "large_image_ref"
-    needed_tags_rename["title_image_link_1x"] = "small_teaser_image_ref"
-    needed_tags_rename["title_image_link_2x"] = "large_teaser_image_ref"
-
-    new_dict = {}
-    for key in movie:
-        if key in needed_tags:
-            if key in needed_tags_rename:
-                if not ((key == 'Время') and (movie[key] == '—')):
-                    new_dict[delete_space(needed_tags_rename[key])] = movie[key]
-            else:
-                new_dict[delete_space(key)] = movie[key]
-        if key in needed_tags_array_1:
-            new_dict[needed_tags_rename[delete_space(key)]] = movie[key][0]
-    return new_dict
 
 
 def create_persons_order(data):
@@ -93,18 +60,6 @@ def create_genres_order(new_data):
         all_queue += query
     all_genres_creating = all_queue
     return all_genres_creating
-
-
-def get_country(country):
-    return ''.join(country.replace(' ', '_').replace(')', '_').replace('(', '_').split('_'))
-
-
-def get_int(string):
-    res = ''
-    for char in string:
-        if char.isdigit():
-            res += char
-    return res
 
 
 def create_country_order(new_data):
@@ -196,6 +151,21 @@ def fill_database(new_data):
     session = driver.session()
     session.run(create_movie_order(new_data) + create_genres_order(new_data) + create_persons_order(new_data) +
                 create_country_order(new_data) + create_movie_genre_ref(new_data) +
+                create_movie_person_ref(new_data) + create_movie_country_ref(new_data))
+    session.close()
+    driver.close()
+
+
+def add_to_database(new_data):
+    driver = GraphDatabase.driver(uri, auth=(user, password))
+    session = driver.session()
+    match_queue = ''
+    add_movies = smart_create_movie_order(new_data)
+    add_genres, match_queue = smart_create_genres_order(new_data, match_queue)
+    add_persons, match_queue = smart_create_persons_order(new_data, match_queue)
+    add_country, match_queue = smart_create_country_order(new_data, match_queue)
+    session.run(match_queue + add_movies + add_genres + add_persons +
+                add_country + create_movie_genre_ref(new_data) +
                 create_movie_person_ref(new_data) + create_movie_country_ref(new_data))
     session.close()
     driver.close()
