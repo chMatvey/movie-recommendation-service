@@ -121,8 +121,6 @@ def django_recommendation(username):
     session = driver.session()
     result = list(session.run('MATCH (u:User)-[:hasWatched]->(m:Movie)-[r]-(t)-[r2]-(m2:Movie) '
                               'WHERE u.username = "' + username.path.split('/')[-1] + '" AND m.id <> m2.id '
-                                                                                  'RETURN m, r, t, r2, m2 LIMIT 10'))
-                              'WHERE u.username = "' + username.path.split('/')[-1] + '" AND m.id <> m2.id '
                                                                                       'RETURN m, r, t, r2, m2'))
     session.close()
     driver.close()
