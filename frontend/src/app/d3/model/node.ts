@@ -12,6 +12,7 @@ export class Node implements SimulationNodeDatum {
   linkCount = 0;
 
   constructor(public id: number,
+              public title: string,
               public r = 50,
               public color = 'green') {}
 }

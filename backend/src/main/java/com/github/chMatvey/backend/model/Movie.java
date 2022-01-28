@@ -3,6 +3,7 @@ package com.github.chMatvey.backend.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
@@ -16,19 +17,28 @@ import static org.springframework.data.neo4j.core.schema.Relationship.Direction.
 @Data
 @Builder
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Node
 public class Movie {
     @Id
+    @EqualsAndHashCode.Include
     private Long id;
     private String title;
     private Integer duration;
     private Double rating;
+
 
     @Property("small_image_ref")
     private String smallImageRef;
 
     @Property("large_image_ref")
     private String largeImageRef;
+
+    @Property("small_teaser_image_ref")
+    private String smallTeaserImageRef;
+
+    @Property("large_teaser_image_ref")
+    private String largeTeaserImageRef;
 
     @Property("release_year")
     private Integer releaseYear;

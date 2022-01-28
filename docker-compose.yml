@@ -1,8 +1,8 @@
 services:
   neo4j:
     image: neo4j:4.0.3
-    hostname: neo4j
     container_name: neo4j
+    hostname: neo4j
     ports:
       - "7474:7474"
       - "7687:7687"
@@ -11,19 +11,38 @@ services:
     environment:
       NEO4J_AUTH: neo4j/streams
       NEO4J_dbms_logs_debug_level: DEBUG
+    networks:
+      - neo4j-network
+    command: neo4j
 
   recommendation:
+    container_name: recommendation
     build: ./recommendation-api
     command: python manage.py runserver 0.0.0.0:8025
     volumes:
       - .:/recommendation-api/code
     ports:
       - "8025:8025"
+    depends_on:
+      - 'neo4j'
+    networks:
+      - neo4j-network
+    links:
+      - neo4j
 
   kinopoisk:
+    container_name: kinopoisk
     build: ./kinopoisk-api
     command: python manage.py runserver 0.0.0.0:8030
     volumes:
       - .:/kinopoisk-api/code
     ports:
       - "8030:8030"
+    depends_on:
+      - 'neo4j'
+    networks:
+      - neo4j-network
+
+networks:
+  neo4j-network:
+    driver: bridge

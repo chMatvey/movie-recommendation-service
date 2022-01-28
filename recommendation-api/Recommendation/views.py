@@ -4,9 +4,9 @@ from neo4j import GraphDatabase
 import json
 
 # Aura queries use an encrypted connection using the "neo4j+s" URI scheme
-uri = "neo4j+s://4ba8049f.databases.neo4j.io"
+uri = "bolt://neo4j:7687"
 user = "neo4j"
-password = "54aOHjUP3XxccKn6pA650bdgEkKUakWIIs9ejWc_xl4"
+password = "streams"
 
 
 def get_movie_from_response(response):
@@ -120,6 +120,8 @@ def django_recommendation(username):
     driver = GraphDatabase.driver(uri, auth=(user, password))
     session = driver.session()
     result = list(session.run('MATCH (u:User)-[:hasWatched]->(m:Movie)-[r]-(t)-[r2]-(m2:Movie) '
+                              'WHERE u.username = "' + username.path.split('/')[-1] + '" AND m.id <> m2.id '
+                                                                                  'RETURN m, r, t, r2, m2 LIMIT 10'))
                               'WHERE u.username = "' + username.path.split('/')[-1] + '" AND m.id <> m2.id '
                                                                                       'RETURN m, r, t, r2, m2'))
     session.close()

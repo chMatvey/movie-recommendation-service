@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderToolbarComponent } from './header-toolbar/header-toolbar.component';
 import { RouterModule } from '@angular/router';
 import { BaseComponent } from './base/base.component'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -11,12 +12,16 @@ import { BaseComponent } from './base/base.component'
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     CommonModule,
     RouterModule,
-    HeaderToolbarComponent
+    HeaderToolbarComponent,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule {

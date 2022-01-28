@@ -1,0 +1,18 @@
+<div class="add-movie">
+  <div class="add-movie__head">
+    <app-header-toolbar></app-header-toolbar>
+  </div>
+
+  <div class="add-movie__content">
+    <form class="add-movie__content__form">
+      <div class="form-group">
+        <label for="ref">Ссылка на Кинопоиск</label>
+        <input [formControl]="formControl" class="form-control" id="ref" type="text">
+      </div>
+
+      <div class="add-movie__content__form__submit">
+        <button type="submit" [disabled]="formControl.invalid" (click)="submit()">Отправить</button>
+      </div>
+    </form>
+  </div>
+</div>

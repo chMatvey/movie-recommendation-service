@@ -19,7 +19,8 @@
         </p>
 
         <ng-template #searchedMoviesBlock>
-          <div *ngFor="let movie of movies" class="movie-list__content__group__item">
+          <div *ngFor="let movie of movies" class="movie-list__content__group__item"
+               [routerLink]="movie.id.toString()">
             <div class="movie-list__content__group__item__image">
               <img [src]="movie.smallImageRef" [alt]="movie.title">
             </div>
@@ -36,13 +37,14 @@
         <p>Все фильмы</p>
       </div>
 
-      <div *ngIf="allMovies$ | async as movies" class="movie-list__content__group all-movies">
-        <p *ngIf="movies.length === 0 else allMoviesBlock" class="no-movies">
+      <div *ngIf="allMovies$ | async as movies" class="movie-list__content__group">
+        <p *ngIf="movies.length === 0 else moviesBlock" class="no-movies">
           Нет фильмов
         </p>
 
-        <ng-template #allMoviesBlock>
-          <div *ngFor="let movie of movies" class="movie-list__content__group__item" [routerLink]="movie.id.toString()">
+        <ng-template #moviesBlock>
+          <div *ngFor="let movie of movies" class="movie-list__content__group__item"
+               [routerLink]="movie.id.toString()">
             <div class="movie-list__content__group__item__image">
               <img [src]="movie.smallImageRef" [alt]="movie.title">
             </div>

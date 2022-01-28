@@ -1,7 +1,7 @@
 import { NodeType } from './node-type'
 
 export interface Node {
-  id: number
+  id: number // Database item id or custom id
   type: NodeType
   title: string
 }

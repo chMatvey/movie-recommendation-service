@@ -9,7 +9,21 @@
         <p>Рекомендации</p>
       </div>
 
-      <div class="recommendation-list__content__group">
+      <div *ngIf="recommendations$ | async as recommendations" class="recommendation-list__content__group">
+        <p *ngIf="recommendations.length === 0 else moviesBlock" class="no-movies">
+          Нет рекомендаций
+        </p>
+
+        <ng-template #moviesBlock>
+          <div *ngFor="let recommend of recommendations" class="recommendation-list__content__group__item" (click)="openRecommend(recommend.id)">
+            <div class="recommendation-list__content__group__item__image">
+              <img [src]="recommend.smallImageRef" [alt]="recommend.title">
+            </div>
+            <div class="recommendation-list__content__group__item__title">
+              <span>{{recommend.title}}</span>
+            </div>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

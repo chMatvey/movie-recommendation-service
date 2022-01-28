@@ -109,17 +109,39 @@
           justify-content: center;
           align-items: flex-end;
 
-          button {
-            height: 32px;
-            width: 168px;
-            font-size: 14px;
+          .watched-form {
+            display: flex;
+            align-items: center;
 
-            &:hover {
-              width: 176px;
-              height: 34px;
-              font-size: 15px;
-              font-weight: 600;
-              transition-duration: .3s
+            input {
+              width: 49px;
+              font-size: 16px;
+              height: 30px;
+              line-height: 14px;
+              color: #fff;
+              background: none;
+              border: 0;
+              border-bottom: 1px solid #fff;
+              margin-right: 14px;
+              text-align: center;
+
+              &:focus {
+                outline: none;
+              }
+            }
+
+            button {
+              height: 32px;
+              width: 168px;
+              font-size: 14px;
+
+              &:hover {
+                width: 176px;
+                height: 34px;
+                font-size: 15px;
+                font-weight: 600;
+                transition-duration: .3s
+              }
             }
           }
         }
