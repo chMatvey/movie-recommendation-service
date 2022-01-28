@@ -95,6 +95,7 @@ def get_recommendation_from_response(response):
             if not has_Link:
                 masta[tit]['nodes'].append(link_node)
                 masta[tit]['links'].append(links_Link_to_Rec)
+                masta[tit]['links'].append(links_Link_to_Watch)
             if not has_Watch:
                 print(2)
                 masta[tit]['nodes'].append(watch_node)

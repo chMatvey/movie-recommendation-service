@@ -15,7 +15,7 @@ def add_movie(id):
     if find(movie_id) == 0:
         movie = parse_page('https://www.kinopoisk.ru/film/' + str(movie_id) + '/')
         add_to_database([movie])
-        return HttpResponse(json.dumps(movie), content_type="application/json")
+        return HttpResponse(json.dumps('Changed'), content_type="application/json")
     else:
         return HttpResponse(json.dumps('None changed'), content_type="application/json")
 
