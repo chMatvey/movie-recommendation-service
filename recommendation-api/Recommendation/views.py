@@ -78,6 +78,10 @@ def count_watched(key):
     return count
 
 
+def get_rating(key):
+    return len(masta[key]['nodes']) * masta[key]['mov_rating'] * masta[key]['user_vote'] / masta[key]['user_vote_count']
+
+
 def get_recommendation_from_response(response):
     watched_movies = get_watched_movies_from_response(response)
     index = 0
@@ -109,10 +113,19 @@ def get_recommendation_from_response(response):
                 masta[tit]['nodes'].append(watch_node)
                 masta[tit]['links'].append(links_Link_to_Watch)
 
+    for res in response:
+        masta[res[4]['title']]['mov_rating'] = res['MovieVoiceCount'] * res['MovieRating']
+        if 'user_vote' not in masta[res[4]['title']].keys():
+            masta[res[4]['title']]['user_vote'] = res['UserRating']
+            masta[res[4]['title']]['user_vote_count'] = 1
+        else:
+            masta[res[4]['title']]['user_vote'] += res['UserRating']
+            masta[res[4]['title']]['user_vote_count'] += 1
+
     masta_values = {}
     for key in masta:
         if key not in watched_titles:
-            masta_values[key] = count_watched(key)
+            masta_values[key] = get_rating(key)
         else:
             masta_values[key] = 0
     masta_values = {k: masta_values[k] for k in sorted(masta_values, key=masta_values.get, reverse=True)}
@@ -131,9 +144,11 @@ def get_recommendation_from_response(response):
 def django_recommendation(username):
     driver = GraphDatabase.driver(uri, auth=(user, password))
     session = driver.session()
-    result = list(session.run('MATCH (u:User)-[:hasWatched]->(m:Movie)-[r]-(t)-[r2]-(m2:Movie) '
+    result = list(session.run('MATCH (u:User)-[r3:hasWatched]->(m:Movie)-[r]-(t)-[r2]-(m2:Movie) '
                               'WHERE u.username = "' + username.path.split('/')[-1] + '" AND m.id <> m2.id '
-                                                                                      'RETURN m, r, t, r2, m2'))
+                                                                  'RETURN m, r, t, r2, m2, r3.rating '
+                                                                  'as UserRating, m2.rating as MovieRating, '
+                                                                  'm2.voice_count as MovieVoiceCount'))
     session.close()
     driver.close()
     return HttpResponse(json.dumps(get_recommendation_from_response(result)), content_type="application/json")
