@@ -18,10 +18,12 @@ export function recommendationToD3model(recommendationModel: model.Recommendatio
     const d3sourceNode = getNodeById(linkModel.sourceId)!
     const d3targetNode = getNodeById(linkModel.targetId)!
 
-    d3sourceNode.linkCount++
-    d3targetNode.linkCount++
+    if (d3sourceNode && d3targetNode) {
+      d3sourceNode.linkCount++
+      d3targetNode.linkCount++
 
-    links.push(new d3.Link(d3sourceNode, d3targetNode, linkModel.title))
+      links.push(new d3.Link(d3sourceNode, d3targetNode, linkModel.title))
+    }
   }
 
   return {nodes, links}

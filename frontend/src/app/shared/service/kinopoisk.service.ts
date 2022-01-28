@@ -10,7 +10,7 @@ export class KinopoiskService {
 
   constructor(private http: HttpClient) { }
 
-  addNewMovieFromKinopoisk(ref: string): Observable<void> {
-    return this.http.put<void>(`${KINOPOISK_SERVICE_API_URL}/api/kinopoisk/`, {ref})
+  addNewMovieFromKinopoisk(id: number): Observable<{id: number}> {
+    return this.http.get<{id: number}>(`${KINOPOISK_SERVICE_API_URL}/gettingmovie/${id}`)
   }
 }
