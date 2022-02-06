@@ -15,6 +15,26 @@ services:
       - neo4j-network
     command: neo4j
 
+  backend:
+    container_name: backend
+    build: ./backend
+    ports:
+      - "9000:9000"
+    depends_on:
+      - neo4j
+    networks:
+      - neo4j-network
+
+  user:
+    container_name: user
+    build: ./user
+    ports:
+      - "8000:8000"
+    depends_on:
+      - neo4j
+    networks:
+      - neo4j-network
+
   recommendation:
     container_name: recommendation
     build: ./recommendation-api
@@ -24,7 +44,7 @@ services:
     ports:
       - "8025:8025"
     depends_on:
-      - 'neo4j'
+      - neo4j
     networks:
       - neo4j-network
     links:
@@ -39,7 +59,7 @@ services:
     ports:
       - "8030:8030"
     depends_on:
-      - 'neo4j'
+      - neo4j
     networks:
       - neo4j-network
 

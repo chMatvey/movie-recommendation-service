@@ -1,3 +1,4 @@
+import time
 from django.db import models
 
 # Create your models here.
@@ -172,6 +173,7 @@ def add_to_database(new_data):
 
 
 def is_fill_needed():
+    time.sleep(20)
     driver = GraphDatabase.driver(uri, auth=(user, password))
     session = driver.session()
     response = list(session.run("MATCH (m:Movie) RETURN count(m) as count"))
